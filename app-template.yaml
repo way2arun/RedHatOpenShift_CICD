@@ -58,7 +58,7 @@ objects:
         forcePull: true
         from:
           kind: ImageStreamTag
-          name: jboss-eap64-openshift:1.3
+          name: jboss-eap70-openshift:1.4
           namespace: openshift
       type: Source
     triggers:
@@ -166,7 +166,7 @@ parameters:
 - description: Git source URI for application
   name: SOURCE_URL
   required: true
-  value: https://github.com/openshiftdemos/openshift-tasks
+  value: https://github.com/lbroudoux/openshift-tasks
 - description: Git branch/tag reference
   name: SOURCE_REF
   value: master

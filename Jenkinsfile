@@ -1,6 +1,11 @@
 node('maven') {
   // define commands
   def mvnCmd = "mvn"
+  // injection of environment variables is not done so set them here...
+  def SOURCE_REF = 'master'
+  def SOURCE_URL = 'https://github.com/lbroudoux/openshift-tasks'
+  def DEV_PROJECT = 'ocp-tasks'
+  def APPLICATION_NAME = 'jkf-tasks'
 
   stage 'build'
     git branch: '${SOURCE_REF}', url: '${SOURCE_URL}'

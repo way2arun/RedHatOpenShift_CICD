@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: openshift-tasks-jenkinsfile
+metadata:
+  name: openshift-tasks-jenkinsfile
+objects:
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      application: ${APPLICATION_NAME}-jenkinsfile
+    name: ${APPLICATION_NAME}-jenkinsfile
+  spec:
+    source:
+      git:
+        ref: ${SOURCE_REF}
+        uri: ${SOURCE_URL}
+      type: Git
+    strategy:
+      jenkinsPipelineStrategy:
+        jenkinsfilePath: Jenkinsfile
+      type: JenkinsPipeline
+      type: Generic
+    triggers:
+    - github:
+        secret: kJZLvfQr3hZg
+      type: GitHub
+    - generic:
+        secret: kJZLvfQr3hZg
+      type: Generic
+parameters:
+- description: The name for the application.
+  name: APPLICATION_NAME
+  required: true
+  value: jkf-tasks
+- description: The name of Dev project
+  name: DEV_PROJECT
+  required: true
+  value: ocp-tasks
+- description: Git source URI for application
+  name: SOURCE_URL
+  required: true
+  value: https://github.com/lbroudoux/openshift-tasks
+- description: Git branch/tag reference
+  name: SOURCE_REF
+  value: master

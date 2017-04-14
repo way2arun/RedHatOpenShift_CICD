@@ -26,6 +26,8 @@ This is the most obvious for people starting with OpenShift: you'll use the defa
 * Optionally, add some extra environment variables on the BuildConfig for referring Maven component mirror (`MAVEN_MIRROR_URL`),
 * Hit the save button and you'll got the application running in few minutes.
 
+![base-template-s2i](https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/assets/base-template-s2i.png)  
+
 ### #2: Bring your own S2I template
 
 This variant consists in providing your own template that will be a customization of OpenShift provided template. Providing your own template allows you to lower the number of parameters the developer will have to fill and fixing hard values. To illustrate this flow within your `ocp-tasks` project:
@@ -35,6 +37,8 @@ This variant consists in providing your own template that will be a customizatio
 * Adapt the name of application to `s2i-tasks` or something,
 * Refer this Github repository (`http://github.com/lbroudoux/openshift-tasks`) or another internal one,
 * Hit the save button and you'll got the application running in few minutes.
+
+![base-template-s2i](https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/assets/custom-template-s2i.png)  
 
 ### #3: Custom S2I for binary deployment
 
@@ -47,11 +51,14 @@ To illustrate this flow within your `ocp-tasks` project, we assume that previous
 * Refer the companion Github repository (`http://github.com/lbroudoux/openshift-tasks-bin-deploy`) or another internal one,
 * Hit the save button.
 
+![s2i-binary-deployment](https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/assets/s2i-binary-deployment.png)  
+
 ### #4: Build pipeline managed out of Source code
 
 
 ### #5: Build pipeline managed within Source code
 
+![jenkinsfile-template](https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/assets/jenkinsfile-template.png)
 
 ### #6: Directly from IDE
 

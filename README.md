@@ -72,7 +72,7 @@ Now the second part is related to OpenShift. Because previous variant has been d
 
 Build and the Deployment may start but you will likely deploy an empty JBoss EAP because you have not supplied any deployable artifact yet. So you may cancel automatically started build and deployment before going further.
 
-You now have a build config in Jenkins responsible for producing the binary and a build config in OpenShift that will be responsible of collecting the binary artifact and building a container image for deployment. Having a closer look at [assemble file](https://github.com/lbroudoux/openshift-tasks-bin-deploy/blob/master/.s2i/bin/assemble), you'll notice that our Build in OpenShift will need further environment variables to be able to retrieve the artifact. Through the console, go to your `bin-tasks` build and add these vairables:
+You now have a build config in Jenkins responsible for producing the binary and a build config in OpenShift that will be responsible of collecting the binary artifact and building a container image for deployment. Having a closer look at [assemble file](https://github.com/lbroudoux/openshift-tasks-bin-deploy/blob/master/.s2i/bin/assemble), you'll notice that our Build in OpenShift will need further environment variables to be able to retrieve the artifact. Through the console, go to your `bin-tasks` build and add these variables:
 * `WAR_FILE_URL` will be URL to which is published your artifact by Jenkins. Something like http://jenkins-ocp-tasks.example.com/job/bin-tasks/lastSuccessfulBuild/artifact/target/openshift-tasks.war
 * `WAR_FILE_USER` is a user that is allowed to get this file,
 * `WAR_FILE_PASSWORD` is the Jenkins API token for this user (go to User settings in Jenkins and reveal API Token).
@@ -84,6 +84,7 @@ Finally, you may want to link all things together. So that when the `bin-tasks` 
 
 ### #5 - Build pipeline managed within Source code
 
+This variant consists in dynamically discovering a Jenkins configuration that will be used to configure a Build Pipeline within a Jenkins instance. It demonstrates the [Jenkinsfile build strategy](https://docs.openshift.com/container-platform/3.4/dev_guide/builds/build_strategies.html#pipeline-strategy-options) using an external `Jenkinsfile` that may be used to treat pipeline as code. At the beginning of every build iteration, OpenShift will discover this file and update the corresponding Pipeline definition in Jenkins. To illustrate this flow within your `ocp-tasks` project:
 * Register your app template in OpenShift using `oc create -f https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/app-template-jenkinsfile.yaml -n ocp-tasks`,
 * Go to "Add to project" page,
 * Pick the `openshift-tasks-jenkinsfile` template,
@@ -91,7 +92,12 @@ Finally, you may want to link all things together. So that when the `bin-tasks` 
 * Refer this Github repository (`http://github.com/lbroudoux/openshift-tasks`) or another internal one,
 * Hit the save button.
 
+The application is not automatically built and deployed because our template does not contain any other thing that a Build configuration that just instantiate the pipeline for the first time. Browsing the console and going to _Builds_ > _Pipelines_, you may find the discovered pipeline. It is now up to you to start this pipeline and having the application running in few minutes.
+
+This process is described as follow:
 ![jenkinsfile-template](https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/assets/jenkinsfile-template.png)
+
+If you have a look at the [Jenkinsfile](https://github.com/lbroudoux/openshift-tasks/blob/master/Jenkinsfile), you'll see that each and every operation of the pipeline provess is handled as code.
 
 ### #6 - Directly from IDE
 

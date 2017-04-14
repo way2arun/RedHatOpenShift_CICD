@@ -84,6 +84,13 @@ Finally, you may want to link all things together. So that when the `bin-tasks` 
 
 ### #5 - Build pipeline managed within Source code
 
+* Register your app template in OpenShift using `oc create -f https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/app-template-jenkinsfile.yaml -n ocp-tasks`,
+* Go to "Add to project" page,
+* Pick the `openshift-tasks-jenkinsfile` template,
+* Adapt the name of application to `jkf-tasks`,
+* Refer this Github repository (`http://github.com/lbroudoux/openshift-tasks`) or another internal one,
+* Hit the save button.
+
 ![jenkinsfile-template](https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/assets/jenkinsfile-template.png)
 
 ### #6 - Directly from IDE

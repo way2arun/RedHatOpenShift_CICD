@@ -26,7 +26,14 @@ This is the most obvious for people starting with OpenShift: you'll use the defa
 * Optionally, add some extra environment variables on the BuildConfig for referring Maven component mirror (`MAVEN_MIRROR_URL`),
 * Hit the save button and you'll got the application running in few minutes.
 
+The process executed by OpenShift can be described as follow:
+
 ![base-template-s2i](https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/assets/base-template-s2i.png)  
+
+* Giving the template configuration and given URL for source repository, OpenShift realize the checkout of code sources,
+* It sees that application if powered by Maven and so launch the Maven build to that it produces compiled Java classes and then deployable binary artifact (here called `openshift-task.war`),
+* That later binary artifact is then marged on top of `jboss-eap70` base image to produce a Docker image for our application,
+* Image is tored within OpenShift Docker registry and can then trigger a new deployment (because template says that a new image should trigger a new deployment).
 
 ### #2: Bring your own S2I template
 
@@ -38,7 +45,11 @@ This variant consists in providing your own template that will be a customizatio
 * Refer this Github repository (`http://github.com/lbroudoux/openshift-tasks`) or another internal one,
 * Hit the save button and you'll got the application running in few minutes.
 
+The process executed by OpenShift can be described as follow and is basically the same as with standard base template:
+
 ![base-template-s2i](https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/assets/custom-template-s2i.png)  
+
+The main differences you may noticed when creating your application is that the form to complete before deploying is drastically simpler than the default one. Providing a custom template allows you to pre-configure or hard write some parameters so that you're sure that users would not be able to change values or be bothered by choosing the right values.
 
 ### #3: Custom S2I for binary deployment
 

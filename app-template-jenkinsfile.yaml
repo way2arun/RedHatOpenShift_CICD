@@ -8,6 +8,8 @@ objects:
 - apiVersion: v1
   kind: BuildConfig
   metadata:
+    annotations:
+      pipeline.alpha.openshift.io/uses: '[{"name": "jkf-tasks", "namespace": "", "kind": "DeploymentConfig"}]'
     labels:
       application: ${APPLICATION_NAME}-jenkinsfile
     name: ${APPLICATION_NAME}-jenkinsfile

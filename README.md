@@ -3,10 +3,10 @@
 The hardest thing when starting OpenShift from a developer point of view is not in deploying an application to it. This step can be done very easily. We found indeed that the most challenging part is to find the best way to do it ! Because OpenShift is so adaptable and flexible that it offers _A Thousand and One Way_ to deploy an application. The _best way_ will be the one that best fit a bunch of criteria:
 * Your development process: what is your existing ecosystem and flow? (already using Jenkins, Nexus, ...)
 * Your developer's maturity regarding Containers and CI/CD: do they want to manage Containers Dockerfile or Pipeline as code ?
-* Your Ops or Technical exports involvement: wether they need to customize provided base images or base templates for introducing specificities,
+* Your Ops or Technical experts involvement: wether they need to customize provided base images or base templates for introducing specificities,
 * Your will to build different Service offers allowing multiple workflows adapted to multiple development teams.
 
-Following this tutorial, you will deploy the same application using 6 different methods. Remember that this is _just_ 6 methods that represents main ways of doing thins, there's a number of variations that may be defined using some elements picked from one or another method exposed here.
+Following this tutorial, you will deploy the same application using 6 different methods. Remember that this is _just_ 6 methods that represents main ways of doing things, there's a number of variations that may be defined using some elements picked from one or another method exposed here.
 
 For deploying the application repeatedly, you will only need an OpenShift project for isolating things out. Methods #6 may also require a `JBoss Developer Studio` on version 10+. We propose you create this project using the identifier `ocp-tasks` because some methods have this id hard-coded.
 
@@ -31,9 +31,9 @@ The process executed by OpenShift can be described as follow:
 ![base-template-s2i](https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/assets/base-template-s2i.png)  
 
 * Giving the template configuration and given URL for source repository, OpenShift realize the checkout of code sources,
-* It sees that application if powered by Maven and so launch the Maven build to that it produces compiled Java classes and then deployable binary artifact (here called `openshift-task.war`),
-* That later binary artifact is then marged on top of `jboss-eap70` base image to produce a Docker image for our application,
-* Image is tored within OpenShift Docker registry and can then trigger a new deployment (because template says that a new image should trigger a new deployment).
+* It sees that application is powered by Maven and so launches the Maven build so that it produces compiled Java classes and then deployable binary artifact (here called `openshift-task.war`),
+* That later binary artifact is then added on top of `jboss-eap70` base image to produce a Docker image for our application,
+* Image is stored within OpenShift Docker registry and can then trigger a new deployment (because template says that a new image should trigger a new deployment).
 
 ### #2 - Bring your own S2I template
 
@@ -53,9 +53,9 @@ The main differences you may noticed when creating your application is that the 
 
 ### #3 - Custom S2I for binary deployment
 
-This variant consists in providing your own template like the previous one but adapting the Source-to-image process by making OpenShift build your application image not from source but from a binary file you will inject. This variant is using the S2I customization capabilities as described here https://docs.openshift.com/container-platform/3.4/dev_guide/builds/build_strategies.html#override-builder-image-scripts. The customization script we used is located into a companion repository [here](http://github.com/lbroudoux/openshift-tasks-bin-deploy) to enforce separation of concerns but it could be located in same repository.
+This variant consists in providing your own template like the previous one but adapting the Source-to-image process by making OpenShift build your application image not from source but from a binary file you will inject. This variant is using the S2I customization capabilities as described [here]( https://docs.openshift.com/container-platform/3.4/dev_guide/builds/build_strategies.html#override-builder-image-scripts). The customization script we used is located into a companion repository [here](http://github.com/lbroudoux/openshift-tasks-bin-deploy) to enforce separation of concerns but it could be located in the same repository.
 
-To illustrate this flow within your `ocp-tasks` project, we assume that previous step has been done and template is already registered. The whole process of this variant is fully described here showing the split of responsabilities between Jenkins and OpenShift:
+To illustrate this flow within your `ocp-tasks` project, we assume that previous step (#2) has been done and template is already registered. The whole process of this variant is fully described here showing the split of responsabilities between Jenkins and OpenShift:
 
 ![s2i-binary-deployment](https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/assets/s2i-binary-deployment.png)  
 
@@ -70,9 +70,9 @@ Now the second part is related to OpenShift. Because previous variant has been d
 * Refer the companion Github repository (`http://github.com/lbroudoux/openshift-tasks-bin-deploy`) or another internal one,
 * Hit the save button.
 
-Build and the Deployment may start but you will likely deploy an empty JBoss EAP because you have not supplied any deployable artifact yet. So you may cancel automatically started build and deployment before going further.
+Build and then Deployment may start but you will likely deploy an empty JBoss EAP because you have not supplied any deployable artifact yet. So you may cancel automatically started build and deployment before going further.
 
-You now have a build config in Jenkins responsible for producing the binary and a build config in OpenShift that will be responsible of collecting the binary artifact and building a container image for deployment. Having a closer look at [assemble file](https://github.com/lbroudoux/openshift-tasks-bin-deploy/blob/master/.s2i/bin/assemble), you'll notice that our Build in OpenShift will need further environment variables to be able to retrieve the artifact. Through the console, go to your `bin-tasks` build and add these variables:
+You now have a build config in Jenkins responsible for producing the binary and a build config in OpenShift that will be responsible for collecting the binary artifact and building a container image for deployment. Having a closer look at [assemble file](https://github.com/lbroudoux/openshift-tasks-bin-deploy/blob/master/.s2i/bin/assemble), you'll notice that our Build in OpenShift will need further environment variables to be able to retrieve the artifact. Through the console, go to your `bin-tasks` build and add these variables:
 * `WAR_FILE_URL` will be URL to which is published your artifact by Jenkins. Something like http://jenkins-ocp-tasks.example.com/job/bin-tasks/lastSuccessfulBuild/artifact/target/openshift-tasks.war
 * `WAR_FILE_USER` is a user that is allowed to get this file,
 * `WAR_FILE_PASSWORD` is the Jenkins API token for this user (go to User settings in Jenkins and reveal API Token).
@@ -80,6 +80,16 @@ You now have a build config in Jenkins responsible for producing the binary and 
 Finally, you may want to link all things together. So that when the `bin-tasks` job in Jenkins ends up successfully, it may trigger the `bin-tasks` build configuration into OpenShift. This can be easily done via a new Jenkins job that will use the OpenShift plugin for Jenkins. Create such a new job called for example `bin-tasks-deploy` (if your Jenkins runs into OpenShift, you may clone de _OpenShift Sample_ job) and configure this job for watching `bin-tasks` successful result and then trigerring a new OpenShift Built: this is a builtin Build action coming with OpenShift plugin for Jenkins.
 
 ### #4 - Build pipeline managed out of Source code
+
+In this variant, you'll see how OpenShift enables
+
+* Register your app template in OpenShift using `oc create -f https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/app-template-no-trigger.yaml -n ocp-tasks`,
+* Go to "Add to project" page,
+* Pick the `openshift-tasks-no-trigger` template,
+* Adapt the name of application to `jkp-tasks`,
+* Refer this Github repository (`http://github.com/lbroudoux/openshift-tasks`) or another internal one,
+* Hit the save button (a first Build should now have been started),
+* Declare a new Pipeline build configuration using `oc create -f https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/pipeline-bc.yaml -n ocp-tasks`
 
 
 ### #5 - Build pipeline managed within Source code

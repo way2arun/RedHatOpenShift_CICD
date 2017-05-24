@@ -85,7 +85,7 @@ In this variant, you'll see how OpenShift enables build pipeline definition and 
 
 To illustrate this flow within your `ocp-tasks` project, we assume that previous step (#3) has been done and a Jenkins instance is already present in your project. The whole process of this variant is fully described here showing the split of responsabilities between Jenkins and OpenShift:
 
-![jenkins-pipeline](https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/assets/s2i-binary-deployment.png)
+![jenkins-pipeline](https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/assets/jenkins-pipeline.png)
 
 You may notice that the steps of Pipeline are here predictable and managed in Jenkins outside of source code. Jenkins delegate some operations of the pipeline workflow to OpenShift but it's definitely up to you to enrich this process with Integration Tests, Compliance Checks, User Acceptance Tests and so on. In order to deploy this example bootstrap process, follow this steps:
 * Register the new app template in OpenShift using `oc create -f https://raw.githubusercontent.com/lbroudoux/openshift-tasks/master/app-template-no-trigger.yaml -n ocp-tasks`,

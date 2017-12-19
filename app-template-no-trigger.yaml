@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: openshift-tasks
+  template: openshift-tasks-no-trigger
 metadata:
-  name: openshift-tasks
+  name: openshift-tasks-no-trigger
 objects:
 - apiVersion: v1
   kind: ImageStream

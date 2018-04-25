@@ -166,7 +166,7 @@ parameters:
 - description: Git source URI for application
   name: SOURCE_URL
   required: true
-  value: https://github.com/lbroudoux/openshift-tasks
+  value: https://github.com/way2arun/nodeJSDocker
 - description: Git branch/tag reference
   name: SOURCE_REF
   value: master

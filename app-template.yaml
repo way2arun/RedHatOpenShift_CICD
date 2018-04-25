@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: openshift-tasks
+  template: tjx-jboss-eap70-1.5
 metadata:
-  name: openshift-tasks
+  name: tjx-jboss-eap70-1.5
 objects:
 - apiVersion: v1
   kind: ImageStream
@@ -58,7 +58,7 @@ objects:
         forcePull: true
         from:
           kind: ImageStreamTag
-          name: jboss-eap70-openshift:1.4
+          name: jboss-eap70-openshift:1.5
           namespace: openshift
       type: Source
     triggers:

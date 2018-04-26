@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: dealservice-jenkinsfile
+  template: tjx-dealservice-jenkinsfile
 metadata:
-  name: dealservice-jenkinsfile
+  name: tjx-dealservice-jenkinsfile
 objects:
 - apiVersion: v1
   kind: BuildConfig

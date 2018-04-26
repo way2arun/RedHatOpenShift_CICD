@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: btk-pipeline
+  labels:
+    name: btk-pipeline
+  annotations:
+    pipeline.alpha.openshift.io/uses: '[{"name": "btk", "namespace": "", "kind": "DeploymentConfig"}]'
+spec:
+  triggers:
+    -
+      type: GitHub
+      github:
+        secret: secret101
+    -
+      type: Generic
+      generic:
+        secret: secret101
+  runPolicy: Serial
+  source:
+    type: None
+  strategy:
+    type: JenkinsPipeline
+    jenkinsPipelineStrategy:
+      jenkinsfile: "node() {\nstage 'build'\nopenshiftBuild(buildConfig: 'btk', showBuildLogs: 'true')\nstage 'deploy'\nopenshiftDeploy(deploymentConfig: 'btk')\nopenshiftScale(deploymentConfig: 'btk',replicaCount: '2')\n}"
+  output:
+  resources:
+  postCommit:

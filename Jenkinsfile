@@ -3,9 +3,9 @@ node('maven') {
   def mvnCmd = "mvn"
   // injection of environment variables is not done so set them here...
   def sourceRef = "master"
-  def sourceUrl = "https://github.com/lbroudoux/openshift-tasks"
-  def devProject = "ocp-tasks"
-  def applicationName = "jkf-tasks"
+  def sourceUrl = "https://github.com/way2arun/nodeJSDocker"
+  def devProject = "option5"
+  def applicationName = "dealservice"
 
   stage 'build'
     git branch: sourceRef, url: sourceUrl

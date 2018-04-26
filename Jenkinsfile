@@ -17,7 +17,7 @@ node('maven') {
     sh "cp target/openshift-tasks.war oc-build/deployments/ROOT.war"
     // clean up. keep the image stream
     sh "oc project ${devProject}"
-    sh "oc delete dc,svc,route -l application=${applicationName} -n ${devProject}"
+    
     // create build. override the exit code since it complains about existing imagestream
     sh "oc new-build --name=${applicationName} --image-stream=jboss-eap70-openshift --binary=true --labels=application=${applicationName} -n ${devProject} || true"
     // build image

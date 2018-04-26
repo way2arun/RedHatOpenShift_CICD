@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: openshift-tasks-jenkinsfile
+  template: dealservice-jenkinsfile
 metadata:
-  name: openshift-tasks-jenkinsfile
+  name: dealservice-jenkinsfile
 objects:
 - apiVersion: v1
   kind: BuildConfig
   metadata:
     annotations:
-      pipeline.alpha.openshift.io/uses: '[{"name": "jkf-tasks", "namespace": "", "kind": "DeploymentConfig"}]'
+      pipeline.alpha.openshift.io/uses: '[{"name": "dealservice-jenkinsfile", "namespace": "", "kind": "DeploymentConfig"}]'
     labels:
       application: ${APPLICATION_NAME}-jenkinsfile
     name: ${APPLICATION_NAME}-jenkinsfile
@@ -43,7 +43,7 @@ parameters:
 - description: Git source URI for application
   name: SOURCE_URL
   required: true
-  value: https://github.com/lbroudoux/openshift-tasks
+  value: https://github.com/way2arun/nodeJSDocker
 - description: Git branch/tag reference
   name: SOURCE_REF
   value: master

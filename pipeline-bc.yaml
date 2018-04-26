@@ -2,20 +2,20 @@ apiVersion: v1
 kind: BuildConfig
 metadata:
   annotations:
-    pipeline.alpha.openshift.io/uses: '[{"name": "jkp-tasks", "namespace": "", "kind": "DeploymentConfig"}]'
+    pipeline.alpha.openshift.io/uses: '[{"name": "dealservice", "namespace": "", "kind": "DeploymentConfig"}]'
   labels:
-    name: jkp-tasks-pipeline
-  name: jkp-tasks-pipeline
+    name: dealservice-tasks-pipeline
+  name: dealservice-tasks-pipeline
 spec:
   strategy:
     jenkinsPipelineStrategy:
       jenkinsfile: |-
         node('maven') {
             stage 'build'
-            openshiftBuild(buildConfig: 'jkp-tasks', showBuildLogs: 'true')
+            openshiftBuild(buildConfig: 'dealservice', showBuildLogs: 'true')
 
             stage 'deploy'
-            openshiftDeploy(deploymentConfig: 'jkp-tasks')
+            openshiftDeploy(deploymentConfig: 'dealservice')
         }
     type: JenkinsPipeline
   triggers:

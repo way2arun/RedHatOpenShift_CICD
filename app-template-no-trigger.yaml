@@ -154,7 +154,7 @@ parameters:
 - description: The name for the application.
   name: APPLICATION_NAME
   required: true
-  value: tasks
+  value: dealservice
 - description: Git source URI for application
   name: SOURCE_URL
   required: true

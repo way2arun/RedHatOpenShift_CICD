@@ -35,11 +35,11 @@ parameters:
 - description: The name for the application.
   name: APPLICATION_NAME
   required: true
-  value: jkf-tasks
+  value: dealservice
 - description: The name of Dev project
   name: DEV_PROJECT
   required: true
-  value: ocp-tasks
+  value: option5
 - description: Git source URI for application
   name: SOURCE_URL
   required: true

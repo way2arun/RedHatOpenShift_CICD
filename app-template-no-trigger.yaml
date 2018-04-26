@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: openshift-tasks-no-trigger
+  template: tjx-option4-no-trigger
 metadata:
-  name: openshift-tasks-no-trigger
+  name: tjx-option4-no-trigger
 objects:
 - apiVersion: v1
   kind: ImageStream
@@ -58,7 +58,7 @@ objects:
         forcePull: true
         from:
           kind: ImageStreamTag
-          name: jboss-eap70-openshift:1.4
+          name: jboss-eap70-openshift:1.5
           namespace: openshift
       type: Source
     triggers:
@@ -158,7 +158,7 @@ parameters:
 - description: Git source URI for application
   name: SOURCE_URL
   required: true
-  value: https://github.com/lbroudoux/openshift-tasks
+  value: https://github.com/way2arun/nodeJSDocker
 - description: Git branch/tag reference
   name: SOURCE_REF
   value: master

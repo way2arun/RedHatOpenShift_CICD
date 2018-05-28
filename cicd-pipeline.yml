@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: poservice-pipeline
+  labels:
+    name: poservice-pipeline
+  annotations:
+    pipeline.alpha.openshift.io/uses: '[{"name": "poservice", "namespace": "", "kind": "DeploymentConfig"}]'
+spec:
+  triggers:
+    -
+      type: GitHub
+      github:
+        secret: secret101
+    -
+      type: Generic
+      generic:
+        secret: secret101
+  runPolicy: Serial
+  source:
+    type: None
+  strategy:
+    type: JenkinsPipeline
+    jenkinsPipelineStrategy:
+      jenkinsfile: "node() {\nstage 'build'\nopenshiftBuild(buildConfig: 'poservice', showBuildLogs: 'true')\nstage 'deploy'\nopenshiftDeploy(deploymentConfig: 'poservice')\nopenshiftScale(deploymentConfig: 'poservice',replicaCount: '2')\n}"
+  output:
+  resources:
+  postCommit:

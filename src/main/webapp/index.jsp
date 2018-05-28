@@ -168,7 +168,7 @@
             </div>
             <div class="card-pf-body" id="messages">
               <div class="message-container">
-                <p>Nothing to report.</p>
+                <p>No POs to report.</p>
               </div>
             </div>
           </div>

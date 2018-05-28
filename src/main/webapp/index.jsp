@@ -42,7 +42,7 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/">
-          OpenShift Tasks Demo
+          TJX OpenShift CICD Demo
         </a>
       </div>
       <div class="collapse navbar-collapse navbar-collapse-1">
@@ -59,19 +59,19 @@
           <div class="card-pf">
             <div class="card-pf-heading">
               <h2 class="card-pf-title">
-                Logger
+                PO Details
               </h2>
             </div>
             <div class="card-pf-body">
               <div style="text-align: center;">
                 <p>
-                  <button class="btn btn-primary btn-block" type="button" id="loginfo">Log Info</button>
+                  <button class="btn btn-primary btn-block" type="button" id="loginfo">List POs</button>
                 </p>
                 <p>
-                  <button class="btn btn-primary btn-block" type="button" id="logwarning">Log Warning</button>
+                  <button class="btn btn-primary btn-block" type="button" id="logwarning">Create PO</button>
                 </p>
                 <p>
-                  <button class="btn btn-primary btn-block" type="button" id="logerror">Log Error</button>
+                  <button class="btn btn-primary btn-block" type="button" id="logerror">Ammend PO</button>
                 </p>
               </div>
             </div>
@@ -81,20 +81,20 @@
           <div class="card-pf">
             <div class="card-pf-heading">
               <h2 class="card-pf-title">
-                Load Generator
+                PO Generator
               </h2>
             </div>
             <div class="card-pf-body">
               <form class="form-horizontal">
                 <div class="form-group">
-                  <label class="control-label col-md-3" for="seconds">Seconds</label>
+                  <label class="control-label col-md-3" for="seconds">PO#</label>
                   <div class="col-md-6">
                     <input type="text" id="seconds" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="col-md-12">
-                    <button type="button" class="btn btn-primary btn-block" id="load">Load!</button>
+                    <button type="button" class="btn btn-primary btn-block" id="load">Create PO!</button>
                   </div>
                 </div>
               </form>
@@ -105,7 +105,7 @@
           <div class="card-pf">
             <div class="card-pf-heading">
               <h2 class="card-pf-title">
-                Danger Zone
+                PO Zone
               </h2>
             </div>
             <div class="card-pf-body">
@@ -116,10 +116,10 @@
                   </div>
                 </div>
                 <p>
-                  <button class="btn btn-danger btn-block" type="button" id="toggle">Toggle Health</button>
+                  <button class="btn btn-danger btn-block" type="button" id="toggle">PO Details</button>
                 </p>
                 <p>
-                  <button class="btn btn-danger btn-block" type="button" id="kill">Kill Instance</button>
+                  <button class="btn btn-danger btn-block" type="button" id="kill">DELETE PO</button>
                 </p>
               </div>
             </div>

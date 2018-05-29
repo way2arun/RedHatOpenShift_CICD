@@ -143,7 +143,7 @@
                   </tr>
                   <tr role="row" class="even">
                     <td>Pod IP</td>
-                    <td><%= System.getenv("SERVER_ADDR") %></td>
+                    <td><%= System.getenv("POSERVICES_SERVICE_HOST") %></td>
                   </tr>
                   <tr role="row" class="odd">
                     <td>Used Memory</td>
